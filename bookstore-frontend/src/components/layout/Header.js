@@ -9,6 +9,7 @@ export default function Header() {
             <h1>SBNZ Bookstore</h1>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/browse">Browse books</NavLink>
+            <NavLink to="/register">Create account</NavLink>
         </nav>
     </header>
   )
