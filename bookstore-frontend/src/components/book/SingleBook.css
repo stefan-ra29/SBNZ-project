@@ -1,0 +1,42 @@
+:root {
+    --blue-dark: #022E51;
+    --blue-light: #A3B4C8;
+    --orange-dark: #B74803;
+    --orange-light: #CC6D3D;
+}
+
+.cover-photo {
+    width: 10em;
+    height: auto;
+}
+
+.name {
+    color: var(--blue-dark);
+    font-size: 1.8em;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.author {
+    color: var(--blue-dark);
+    font-size: 1.4em;
+    letter-spacing: 1px;
+}
+
+.price {
+    color: var(--orange-light);
+    font-size: 1.4em;
+    letter-spacing: 1px; 
+}
+.category {
+    color: var(--blue-dark);
+    font-size: 1em;
+    letter-spacing: 1px; 
+}
+
+.single-book-wrapper {
+    background-color: var(--blue-light);
+    padding: 1em;
+    width: 20em;
+    border-radius: 1em;
+}
