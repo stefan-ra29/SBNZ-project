@@ -20,6 +20,7 @@ export default function BrowseBooks() {
                 return (
                     <SingleBook 
                         key={book.id}
+                        id={book.id}
                         name={book.name}
                         author={book.author}
                         price={book.price}

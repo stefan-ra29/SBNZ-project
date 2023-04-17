@@ -1,14 +1,27 @@
 import React from 'react'
+import { useContext } from 'react';
+import CartContext from '../../store/cart-context';
 import './SingleBook.css'
+import BookForm from './BookForm';
 
-export default function SingleBook({name, author, price, category}) {
+export default function SingleBook(props) {
+  const cartCtx = useContext(CartContext);
+
+  function addToCartHandler(amount) {
+      cartCtx.addItem({id: props.id, author: props.author, name: props.name, amount: amount, price: props.price});
+  };
+
   return (
     <div className='single-book-wrapper'>
         <img className='cover-photo' src={require("./generic-books-image.webp")} alt='book cover'/>
-        <p className='name'>{name}</p>
-        <p className='author'>{author}</p>
-        <p className='price'>{price} RSD</p>
-        <p className='category'>{category}</p>
+        <p className='name'>{props.name}</p>
+        <p className='author'>{props.author}</p>
+        <p className='price'>{props.price} RSD</p>
+        <p className='category'>{props.category}</p>
+
+        <div className='form-wrapper'>
+          <BookForm onAddToCart={addToCartHandler}></BookForm>
+        </div>
     </div>
   )
 }
