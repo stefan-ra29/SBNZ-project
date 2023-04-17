@@ -1,8 +1,9 @@
 import React from 'react'
 import "./Header.css";
 import { NavLink } from 'react-router-dom'
+import HeaderCartButton from './HeaderCartButton';
 
-export default function Header() {
+export default function Header(props) {
   return (
     <header>
         <nav>
@@ -10,6 +11,8 @@ export default function Header() {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/browse">Browse books</NavLink>
             <NavLink to="/register">Create account</NavLink>
+
+            <HeaderCartButton onClick={props.onShowCart}></HeaderCartButton>
         </nav>
     </header>
   )

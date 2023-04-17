@@ -3,6 +3,7 @@ package sbnz.integracija.example.book;
 import demo.facts.Book;
 import org.springframework.web.bind.annotation.*;
 import sbnz.integracija.example.book.dto.BookDisplayDTO;
+import sbnz.integracija.example.book.dto.OrderItemDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +32,10 @@ public class BookController {
         }
 
         return bookDisplayDTOs;
+    }
+
+    @PostMapping("/order")
+    public void placeOrder(@RequestBody List<OrderItemDTO> order) {
+        System.out.println(order);
     }
 }
