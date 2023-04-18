@@ -45,6 +45,12 @@
       <version>1.18.26</version>
       <scope>compile</scope>
     </dependency>
+<!--      <dependency>-->
+<!--          <groupId>sbnz.integracija</groupId>-->
+<!--          <artifactId>drools-spring-app</artifactId>-->
+<!--          <version>0.0.1-SNAPSHOT</version>-->
+<!--          <scope>compile</scope>-->
+<!--      </dependency>-->
 
   </dependencies>
 

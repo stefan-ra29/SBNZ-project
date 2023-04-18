@@ -34,8 +34,8 @@ public class BookController {
         return bookDisplayDTOs;
     }
 
-    @PostMapping("/order")
-    public void placeOrder(@RequestBody List<OrderItemDTO> order) {
-        System.out.println(order);
-    }
+//    @PostMapping("/order")
+//    public void placeOrder(@RequestBody List<OrderItemDTO> order) {
+//        System.out.println(order);
+//    }
 }

@@ -13,4 +13,5 @@ public class OrderItemDTO {
     private String author;
     private int amount;
     private double price;
+    private String category;
 }
