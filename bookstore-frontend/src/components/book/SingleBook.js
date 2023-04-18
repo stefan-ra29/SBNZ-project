@@ -8,7 +8,7 @@ export default function SingleBook(props) {
   const cartCtx = useContext(CartContext);
 
   function addToCartHandler(amount) {
-      cartCtx.addItem({id: props.id, author: props.author, name: props.name, amount: amount, price: props.price});
+      cartCtx.addItem({id: props.id, author: props.author, name: props.name, amount: amount, price: props.price, category: props.category});
   };
 
   return (

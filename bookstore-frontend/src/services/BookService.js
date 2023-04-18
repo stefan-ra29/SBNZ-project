@@ -18,7 +18,8 @@ export function placeOrder(books) {
     console.log(books);
     axios.post(apiURL + '/order', books)
     .then((response) => {
-        alert('order placed!')
+        console.log(response)
+        alert('Your price with discount is' + ' ' + response.data)
     })
     .catch((error) => {
         console.log(error)
