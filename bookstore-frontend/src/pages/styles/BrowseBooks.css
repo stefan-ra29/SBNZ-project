@@ -9,12 +9,13 @@ h2 {
     margin-left: 2em;
     margin-right: 2em;
     text-align: center;
+    margin-bottom: 2em;
 }
 
 .books-wrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    
     padding-left: 3em;
     padding-right: 3em;
 }

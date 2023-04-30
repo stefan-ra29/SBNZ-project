@@ -1,27 +1,27 @@
-import axios from 'axios'
+import { getAxios } from "../utils/AxiosWrapper";
 
 const apiURL = "http://localhost:8080/api/book";
 
-
 export function getAllBooks(setBooks) {
-    axios.get(apiURL)
+  getAxios()
+    .get(apiURL)
     .then((response) => {
-        setBooks(response.data)
+      setBooks(response.data);
     })
     .catch((error) => {
-        console.log(error);
-    })
+      console.log(error);
+    });
 }
 
-
 export function placeOrder(books) {
-    console.log(books);
-    axios.post(apiURL + '/order', books)
+  console.log(books);
+  getAxios()
+    .post(apiURL + "/order", books)
     .then((response) => {
-        console.log(response)
-        alert('Your price with discount is' + ' ' + response.data)
+      console.log(response);
+      alert("Your price with discount is" + " " + response.data);
     })
     .catch((error) => {
-        console.log(error)
-    })
+      console.log(error);
+    });
 }
