@@ -1,10 +1,13 @@
 package sbnz.integracija.example.book;
 
 import demo.facts.Book;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import sbnz.integracija.example.book.dto.BookDisplayDTO;
 import sbnz.integracija.example.book.dto.OrderItemDTO;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class BookController {
     public void addBook(@RequestBody Book book) {
         service.create(book);
     }
+
 
     @GetMapping
     public List<BookDisplayDTO> getAll() {
