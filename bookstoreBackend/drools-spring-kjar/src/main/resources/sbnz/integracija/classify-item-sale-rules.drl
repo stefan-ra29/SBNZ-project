@@ -13,7 +13,7 @@ end
 
 rule "Category based discount"
     when
-        $oi: OrderItem( price > 2000 && category == "education" && (price * amount * 0.93) < discountPrice)
+        $oi: OrderItem( price > 2000 && category == "education")
     then
         $oi.setDiscountPrice(0.93 * $oi.getPrice() * $oi.getAmount());
         $oi.setDiscount(7);
@@ -22,7 +22,7 @@ end
 
 rule "Amount based discount"
     when
-        $oi: OrderItem( amount >= 2 && (price * amount * 0.9) < discountPrice)
+        $oi: OrderItem( amount >= 2)
     then
         $oi.setDiscountPrice(0.9 * $oi.getPrice() * $oi.getAmount());
         $oi.setDiscount(10);
