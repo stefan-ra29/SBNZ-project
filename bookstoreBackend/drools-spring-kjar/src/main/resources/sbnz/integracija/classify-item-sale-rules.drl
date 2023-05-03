@@ -1,6 +1,7 @@
 package sbnz.integracija;
 
 import demo.facts.OrderItem;
+import demo.facts.Order
 
 rule "Price based discount"
     when
@@ -13,7 +14,7 @@ end
 
 rule "Category based discount"
     when
-        $oi: OrderItem( price > 2000 && category == "education" && (price * amount * 0.93) < discountPrice)
+        $oi: OrderItem( price > 2000 && category == "education" )
     then
         $oi.setDiscountPrice(0.93 * $oi.getPrice() * $oi.getAmount());
         $oi.setDiscount(7);
@@ -22,9 +23,25 @@ end
 
 rule "Amount based discount"
     when
-        $oi: OrderItem( amount >= 2 && (price * amount * 0.9) < discountPrice)
+        $oi: OrderItem( amount >= 2 )
     then
         $oi.setDiscountPrice(0.9 * $oi.getPrice() * $oi.getAmount());
         $oi.setDiscount(10);
         update($oi);
+end
+
+rule "3 or more items discount for rorder"
+    when
+        $o: Order(items.size() >= 3)
+    then
+        $o.setDiscountedPrice(0.9 * $o.getOrderPrice());
+
+end
+
+rule "5 or more items discount fo rorder"
+    when
+        $o: Order(items.size() >= 5)
+    then
+        $o.setDiscountedPrice(0.85 * $o.getOrderPrice());
+
 end

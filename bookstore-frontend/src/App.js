@@ -9,6 +9,7 @@ import { useState } from "react";
 import Cart from "./components/cart/Cart";
 import Login from "./pages/Login";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
