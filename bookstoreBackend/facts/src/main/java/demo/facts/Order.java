@@ -22,7 +22,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int userId;
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
     private double orderPrice = 0;
     private double discountedPrice = 0;
