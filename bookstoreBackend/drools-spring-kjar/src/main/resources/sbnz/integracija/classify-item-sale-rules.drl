@@ -14,7 +14,7 @@ end
 
 rule "Category based discount"
     when
-        $oi: OrderItem( price > 2000 && category == "education" )
+        $oi: OrderItem( price > 2000 && category == "Education" )
     then
         $oi.setDiscountPrice(0.93 * $oi.getPrice() * $oi.getAmount());
         $oi.setDiscount(7);
@@ -30,7 +30,7 @@ rule "Amount based discount"
         update($oi);
 end
 
-rule "3 or more items discount for rorder"
+rule "3 or more items discount for order"
     when
         $o: Order(items.size() >= 3)
     then
@@ -38,7 +38,7 @@ rule "3 or more items discount for rorder"
 
 end
 
-rule "5 or more items discount fo rorder"
+rule "5 or more items discount for order"
     when
         $o: Order(items.size() >= 5)
     then
