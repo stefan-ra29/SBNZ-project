@@ -12,11 +12,6 @@
         <module name="drools-spring-kjar" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="drools-spring-app" target="11" />
-      <module name="drools-spring-kjar" target="11" />
-      <module name="facts" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

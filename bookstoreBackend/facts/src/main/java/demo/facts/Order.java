@@ -8,26 +8,23 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.awt.print.Book;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity(name = "orderItems")
-@Table(name = "orderItems")
+@Entity(name = "orders")
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderItem {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int bookId;
-    private String category;
-    private int amount;
-    private double price;
-    private double discountPrice = 0;
-    private int discount = 0;
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private int userId;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items;
+    private double orderPrice = 0;
+    private double discountedPrice = 0;
+
 }
-
-
