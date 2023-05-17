@@ -1,6 +1,7 @@
 import './BookForm.css'
 import { useState, useRef } from 'react';
 import Input from '../ui/Input';
+import { rateBook } from '../../services/BookService';
 
 export default function BookForm(props) {
 
@@ -27,15 +28,14 @@ export default function BookForm(props) {
     function submitRateHandler(event) {
         event.preventDefault();
 
-        const enteredRate = amountInputRef.current.value;
+        const enteredRate = rateInputRef.current.value;
         const enteredRateNumber = +enteredRate
 
         if(enteredRate.trim().length === 0 || enteredRateNumber < 1 || enteredRateNumber > 5) {
             setRateIsValid(false);
             return;
         }
-
-        props.onAddToCart(enteredRateNumber);
+        rateBook(enteredRate, props.id);
     }
 
     return (

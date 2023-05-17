@@ -40,3 +40,28 @@ export function placeOrder(books) {
     });
 }
 
+export function rateBook(enteredRate, bookId) {
+  const token = localStorage.getItem("token");
+  var decode = jwt_decode(token)
+  console.log(decode.id)
+
+  const rateBook = {
+    rate: Number(enteredRate),
+    bookId: bookId,
+    userId: decode.id
+  };
+
+  getAxios()
+    .post("http://localhost:8080/api/rate/rateBook", rateBook)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+      toast.error(error.response.data + " " + "with" + " " + rateBook.rate);
+
+    });
+
+  console.log(rateBook)
+}
+

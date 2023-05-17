@@ -23,22 +23,6 @@ public class RateServiceImpl implements RateService {
     }
 
     @Override
-    public void rateBook(Rate rate) {
-        for (Rate oneRate : getAll()) {
-            if(oneRate.getBookId() == rate.getBookId() && oneRate.getUserId() == rate.getUserId()){
-                throw new UnsupportedOperationException("You have already rated this book");
-            }
-            else{
-                    if (rate.getRate() > 0 || rate.getRate() <= 5) {
-                        repository.save(rate);
-                    } else{
-                        throw new UnsupportedOperationException("The rate must be a number between 1 and 5");
-                    }
-
-                }
-            }
-
-
-        }
+    public void rateBook(Rate rate) { repository.save(rate); }
 
 }
