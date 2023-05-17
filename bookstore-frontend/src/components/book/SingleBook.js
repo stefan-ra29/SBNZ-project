@@ -32,7 +32,7 @@ export default function SingleBook(props) {
       <p className="category">{props.category}</p>
       {isUserLoggedIn() && (
         <div className="form-wrapper">
-          <BookForm onAddToCart={addToCartHandler}></BookForm>
+          <BookForm onAddToCart={addToCartHandler} id={props.id}></BookForm>
         </div>
       )}
     </div>

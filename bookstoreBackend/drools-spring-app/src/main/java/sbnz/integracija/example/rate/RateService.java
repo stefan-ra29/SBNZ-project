@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RateService {
 
-    void rateBook(Rate rate);
+    void rateBook(Rate rate) throws Exception;
 
     List<Rate> getAll();
 
