@@ -1,6 +1,5 @@
 package sbnz.integracija.example.user;
 
-import demo.facts.Book;
 import demo.facts.User;
 import org.springframework.web.bind.annotation.*;
 

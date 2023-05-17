@@ -5,8 +5,10 @@ import Input from '../ui/Input';
 export default function BookForm(props) {
 
     const [amountisValid, setAmountIsValid] = useState(true);
+    const [rateIsValid, setRateIsValid] = useState(true);
 
     const amountInputRef = useRef();
+    const rateInputRef = useRef();
 
     function submitHandler(event) {
         event.preventDefault();
@@ -22,7 +24,22 @@ export default function BookForm(props) {
         props.onAddToCart(enteredAmountNumber);
     }
 
+    function submitRateHandler(event) {
+        event.preventDefault();
+
+        const enteredRate = amountInputRef.current.value;
+        const enteredRateNumber = +enteredRate
+
+        if(enteredRate.trim().length === 0 || enteredRateNumber < 1 || enteredRateNumber > 5) {
+            setRateIsValid(false);
+            return;
+        }
+
+        props.onAddToCart(enteredRateNumber);
+    }
+
     return (
+        <>
         <form className='form' onSubmit={submitHandler}>
             <Input 
             ref={amountInputRef}
@@ -40,5 +57,23 @@ export default function BookForm(props) {
 
             {!amountisValid && <p>Please enter a valid amount (1-5)</p>}
         </form>
+        <form className='form' onSubmit={submitRateHandler}>
+            <Input 
+            ref={rateInputRef}
+            label="Rate" 
+            input={{
+                id: 'rate_' + props.id, 
+                type: 'number',
+                min: '1',
+                max: '5',
+                step: '1',
+                defaultValue: '1'}}
+            />
+            
+            <button>Rate</button>
+
+            {!rateIsValid && <p>Please enter a valid rate (1-5)</p>}
+        </form>
+        </>
     );
 };
