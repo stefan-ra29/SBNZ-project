@@ -5,3 +5,4 @@ insert into books (id, author, category, name, price) values (2003, 'Marcus Aure
 insert into books (id, author, category, name, price) values (2004, 'Stefan Tosic', 1, 'Book', 3500);
 insert into books (id, author, category, name, price) values (2006, 'Vojin', 3, 'Knjiga', 4000);
 insert into users (id, username, password, name) values (2005, 'vojin', '$2a$12$qpW8fwoq457m0A3KRe0S..W3lpn1mjJ/N2ULgKixsy/WNN0/G7bdy', 'vojin');
+insert into rates (id, rate, book_id, user_id) values (2007, 4, 2000, 2005);
