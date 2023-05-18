@@ -4,6 +4,8 @@ import demo.facts.OrderItem;
 import demo.facts.Order
 
 rule "Price based discount"
+    activation-group "order item discounts"
+    salience -2
     when
         $oi: OrderItem( price > 3000)
     then
@@ -13,6 +15,8 @@ rule "Price based discount"
 end
 
 rule "Category based discount"
+    activation-group "order item discounts"
+    salience -1
     when
         $oi: OrderItem( price > 2000 && category == "Education" )
     then
@@ -22,6 +26,8 @@ rule "Category based discount"
 end
 
 rule "Amount based discount"
+    activation-group "order item discounts"
+    salience 0
     when
         $oi: OrderItem( amount >= 2 )
     then
@@ -31,6 +37,8 @@ rule "Amount based discount"
 end
 
 rule "3 or more items discount for order"
+    activation-group "order discounts"
+    salience -1
     when
         $o: Order(items.size() >= 3)
     then
@@ -39,6 +47,8 @@ rule "3 or more items discount for order"
 end
 
 rule "5 or more items discount for order"
+    activation-group "order discounts"
+    salience 0
     when
         $o: Order(items.size() >= 5)
     then
