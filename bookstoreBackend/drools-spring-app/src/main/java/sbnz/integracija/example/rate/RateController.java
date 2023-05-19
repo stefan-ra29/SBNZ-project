@@ -17,18 +17,18 @@ public class RateController {
     }
 
     @PostMapping("/rateBook")
-    public ResponseEntity<Object> rateBook(@RequestBody Rate rate) throws Exception {
+    public ResponseEntity<Object> rateBook(@RequestBody RateDto rateDto) throws Exception {
 
         for (Rate oneRate : service.getAll()) {
-            if(oneRate.getBookId() == rate.getBookId() && oneRate.getUserId() == rate.getUserId()){
+            if(oneRate.getBook().getId() == rateDto.getBookId() && oneRate.getUser().getId() == rateDto.getUserId()){
 //                throw new Exception("You have already rated this book");
                 String errorMessage = "You have already rated this book"; // Set your custom error message here
                 return new ResponseEntity<>("You have already rated this book", HttpStatus.BAD_REQUEST);
 //                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
             }
             else{
-                if (rate.getRate() > 0 || rate.getRate() <= 5) {
-                    service.rateBook(rate);
+                if (rateDto.getRate() > 0 || rateDto.getRate() <= 5) {
+                    service.rateBook(rateDto);
 //                    return ResponseEntity.status(HttpStatus.OK).body("Book rated");
                 } else{
 //                    throw new Exception("The rate must be a number between 1 and 5");

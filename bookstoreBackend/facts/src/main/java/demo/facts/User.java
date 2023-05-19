@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "users")
 @Table(name = "users")
@@ -22,4 +23,6 @@ public class User implements Serializable {
     private String name;
     private String username;
     private String password;
+    @OneToMany(mappedBy = "user")
+    private List<Rate> rates;
 }
