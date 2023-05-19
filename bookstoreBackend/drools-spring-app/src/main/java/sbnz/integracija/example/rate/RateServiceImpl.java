@@ -1,8 +1,11 @@
 package sbnz.integracija.example.rate;
 
+import demo.facts.Book;
 import demo.facts.Rate;
+import demo.facts.User;
 import org.springframework.stereotype.Service;
-import sbnz.integracija.example.book.BookService;
+import sbnz.integracija.example.book.BookRepository;
+import sbnz.integracija.example.user.UserRepository;
 
 import java.util.List;
 
@@ -10,11 +13,13 @@ import java.util.List;
 public class RateServiceImpl implements RateService {
 
     private final RateRepository repository;
+    private final UserRepository userRepository;
+    private final BookRepository bookRepository;
 
-    public BookService bookService;
-
-    public RateServiceImpl(RateRepository repository) {
+    public RateServiceImpl(RateRepository repository, UserRepository userRepository, BookRepository bookRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
+        this.bookRepository = bookRepository;
     }
 
     @Override
@@ -23,6 +28,12 @@ public class RateServiceImpl implements RateService {
     }
 
     @Override
-    public void rateBook(Rate rate) { repository.save(rate); }
+    public void rateBook(RateDto rateDto) {
+        User user = userRepository.findById(rateDto.getUserId()).get();
+        Book book = bookRepository.findById(rateDto.getBookId()).get();
+
+        Rate rate = Rate.builder().user(user).book(book).rate(rateDto.getRate()).build();
+        repository.save(rate);
+    }
 
 }

@@ -27,6 +27,8 @@ public class BookController {
     }
 
 
+
+
     @GetMapping
     public List<BookDisplayDTO> getAll() {
         List<BookDisplayDTO> bookDisplayDTOs = new ArrayList<>();
@@ -36,6 +38,15 @@ public class BookController {
         }
 
         return bookDisplayDTOs;
+    }
+
+    @GetMapping
+    @RequestMapping("/recommendations/unauthorized")
+    public List<BookDisplayDTO> getRecommendationsForUnauthorizedUsers() {
+
+        List<Book> recommendations = service.getRecommendationsForUnauthorizedUsers();
+
+        return null;
     }
 
 

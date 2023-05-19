@@ -1,0 +1,63 @@
+package sbnz.integracija;
+
+import demo.facts.Book
+import java.time.*
+import demo.facts.BookRatingLevel;
+global java.util.List ratesList;
+
+rule "book is new if added in the last month"
+    agenda-group "bookIsNew"
+    when
+        $book: Book(addedToStoreDate.compareTo(LocalDate.now().minusMonths(1)) >= 0)
+    then
+        $book.setNew(true);
+end
+
+rule "book is new if published in the last six months"
+    agenda-group "bookIsNew"
+    when
+        $book: Book(publishedDate.compareTo(LocalDate.now().minusMonths(6)) >= 0)
+    then
+        $book.setNew(true);
+end
+
+rule "book is popular if it has 20 or more rates"
+    agenda-group "bookIsPopular"
+    when
+        $book: Book(rates.size() >= 20)
+    then
+        $book.setPopular(true);
+end
+
+rule "book is popular if its new and has 10 or more rates"
+    agenda-group "bookIsPopular"
+    when
+        $book: Book()
+        eval($book.getRates().size() > 10 && $book.isNew())
+    then
+        $book.setPopular(true);
+end
+
+rule "book is rated good if it has average rating of 4 or higher"
+    agenda-group "bookRating"
+    when
+        $book: Book(getAverageRating() >= 4)
+    then
+        $book.setBookRatingLevel(BookRatingLevel.GOOD);
+end
+
+rule "book is rated bad if it has average rating of 2.5 or lower"
+    agenda-group "bookRating"
+    when
+        $book: Book(getAverageRating() <= 2.5)
+    then
+        $book.setBookRatingLevel(BookRatingLevel.BAD);
+end
+
+rule "book is rated neutral"
+    agenda-group "bookRating"
+    when
+        $book: Book( (getAverageRating() >= 2.5 && getAverageRating() <= 4) || rates.size() == 0)
+    then
+        $book.setBookRatingLevel(BookRatingLevel.NEUTRAL);
+end
