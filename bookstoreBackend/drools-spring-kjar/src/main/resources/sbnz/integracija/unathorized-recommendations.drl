@@ -61,3 +61,19 @@ rule "book is rated neutral"
     then
         $book.setBookRatingLevel(BookRatingLevel.NEUTRAL);
 end
+
+rule "book is recommended if it is popular and rated good or neutral"
+    agenda-group "bookRecommend"
+    when
+        $book: Book(isPopular() == true && (getRatingLevel().equals("NEUTRAL") || getRatingLevel().equals("GOOD")))
+    then
+        $book.setRecommended(true);
+end
+
+rule "book is recommended if it is new"
+    agenda-group "bookRecommend"
+    when
+        $book: Book(isNew() == true)
+    then
+        $book.setRecommended(true);
+end

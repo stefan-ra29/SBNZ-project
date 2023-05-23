@@ -1,11 +1,14 @@
 package sbnz.integracija.example.book;
 
 import demo.facts.Book;
+import demo.facts.BookRatingLevel;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sbnz.integracija.example.book.dto.BookDisplayDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,8 +49,19 @@ public class BookServiceImpl implements BookService{
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("bookIsPopular").setFocus();
         kieSession.fireAllRules();
+        System.out.println(allBooks);
         kieSession.getAgenda().getAgendaGroup("bookRating").setFocus();
         kieSession.fireAllRules();
+        System.out.println(allBooks);
+        kieSession.getAgenda().getAgendaGroup("bookRecommend").setFocus();
+        kieSession.fireAllRules();
+
+//        for(Book book : allBooks) {
+//            if((book.isNew() == true && (book.getRatingLevel() == "NEUTRAL" || book.getRatingLevel() == "GOOD"))){
+//                book.setRecommended(false);
+//                System.out.println(book);
+//            }
+//        }
         kieSession.dispose();
 
         return null;

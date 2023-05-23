@@ -21,26 +21,18 @@ public class RateController {
 
         for (Rate oneRate : service.getAll()) {
             if(oneRate.getBook().getId() == rateDto.getBookId() && oneRate.getUser().getId() == rateDto.getUserId()){
-//                throw new Exception("You have already rated this book");
                 String errorMessage = "You have already rated this book"; // Set your custom error message here
                 return new ResponseEntity<>("You have already rated this book", HttpStatus.BAD_REQUEST);
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
             }
             else{
                 if (rateDto.getRate() > 0 || rateDto.getRate() <= 5) {
                     service.rateBook(rateDto);
-//                    return ResponseEntity.status(HttpStatus.OK).body("Book rated");
                 } else{
-//                    throw new Exception("The rate must be a number between 1 and 5");
                     String errorMessage = "The rate must be a number between 1 and 5"; // Set your custom error message here
                     return new ResponseEntity<>("The rate must be a number between 1 and 5", HttpStatus.BAD_REQUEST);
-//                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
                 }
             }
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
-//        return ResponseEntity.status(HttpStatus.OK).body("Book rated");
-
-//        System.out.println(rate);
     }
 }
