@@ -1,6 +1,7 @@
 package sbnz.integracija;
 
 import demo.facts.Book
+import demo.facts.UnauthorizedUsersRecommendedBook
 import java.time.*
 import demo.facts.BookRatingLevel;
 global java.util.List ratesList;
@@ -57,7 +58,7 @@ end
 rule "book is rated neutral"
     agenda-group "bookRating"
     when
-        $book: Book( (getAverageRating() >= 2.5 && getAverageRating() <= 4) || rates.size() == 0)
+        $book: Book((getAverageRating() >= 2.5 && getAverageRating() <= 4) || rates.size() == 0)
     then
         $book.setBookRatingLevel(BookRatingLevel.NEUTRAL);
 end
@@ -65,15 +66,41 @@ end
 rule "book is recommended if it is popular and rated good or neutral"
     agenda-group "bookRecommend"
     when
-        $book: Book(isPopular() == true && (getRatingLevel().equals("NEUTRAL") || getRatingLevel().equals("GOOD")))
+        $book: Book()
+        $unauthorizedUserRecommendedBook: UnauthorizedUsersRecommendedBook()
+        eval($book.isPopular() == true && ($book.getRatingLevel().equals("NEUTRAL") || $book.getRatingLevel().equals("GOOD")))
     then
-        $book.setRecommended(true);
+        $unauthorizedUserRecommendedBook.addBook($book);
 end
 
 rule "book is recommended if it is new"
     agenda-group "bookRecommend"
     when
-        $book: Book(isNew() == true)
+        $book: Book()
+        $unauthorizedUserRecommendedBook: UnauthorizedUsersRecommendedBook()
+        eval($book.isNew() == true)
+
     then
-        $book.setRecommended(true);
+        $unauthorizedUserRecommendedBook.addBook($book);
 end
+
+rule "book is not recommended if it is poorly rated"
+    agenda-group "removeBookRecommend"
+    when
+        $book: Book()
+        $unauthorizedUserRecommendedBook: UnauthorizedUsersRecommendedBook()
+        eval($unauthorizedUserRecommendedBook.getRecommendedBooks().size() > 10 && $book.getRatingLevel().equals("BAD"))
+    then
+        $unauthorizedUserRecommendedBook.removeBook($book);
+end
+
+rule "book is not recommended if there are more than 10 recommended books"
+    agenda-group "removeRandomBookRecommend"
+    when
+        $book: Book()
+        $unauthorizedUserRecommendedBook: UnauthorizedUsersRecommendedBook()
+        eval($unauthorizedUserRecommendedBook.getRecommendedBooks().size() > 10)
+    then
+        $unauthorizedUserRecommendedBook.removeRandomBook();
+end
+

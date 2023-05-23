@@ -37,9 +37,6 @@ public class Book implements Serializable {
     private boolean isPopular;
     @JsonInclude
     @Transient
-    private boolean isRecommended;
-    @JsonInclude
-    @Transient
     private BookRatingLevel bookRatingLevel;
 
     public double getAverageRating() {
@@ -76,13 +73,6 @@ public class Book implements Serializable {
 
     public void setPopular(boolean isPopular) {
         this.isPopular = isPopular;
-    }
-    public boolean isRecommended() {
-        return isRecommended;
-    }
-
-    public void setRecommended(boolean isRecommended) {
-        this.isRecommended = isRecommended;
     }
 
 }

@@ -2,6 +2,7 @@ package sbnz.integracija.example.book;
 
 import demo.facts.Book;
 import demo.facts.BookRatingLevel;
+import demo.facts.UnauthorizedUsersRecommendedBook;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,10 @@ public class BookServiceImpl implements BookService{
 
         KieSession kieSession = kieContainer.newKieSession();
         List<Book> allBooks = repository.findAll();
+        UnauthorizedUsersRecommendedBook unauthorizedUsersRecommendedBook = new UnauthorizedUsersRecommendedBook();
         for(Book book : allBooks) {
             kieSession.insert(book);
+            kieSession.insert(unauthorizedUsersRecommendedBook);
         }
 
         kieSession.getAgenda().getAgendaGroup("bookIsNew").setFocus();
@@ -55,16 +58,15 @@ public class BookServiceImpl implements BookService{
         System.out.println(allBooks);
         kieSession.getAgenda().getAgendaGroup("bookRecommend").setFocus();
         kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("removeBookRecommend").setFocus();
+        kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("removeRandomBookRecommend").setFocus();
+        kieSession.fireAllRules();
 
-//        for(Book book : allBooks) {
-//            if((book.isNew() == true && (book.getRatingLevel() == "NEUTRAL" || book.getRatingLevel() == "GOOD"))){
-//                book.setRecommended(false);
-//                System.out.println(book);
-//            }
-//        }
         kieSession.dispose();
 
-        return null;
+        List<Book> finalListOfRecommendedBooks = unauthorizedUsersRecommendedBook.getRecommendedBooks();
+        return finalListOfRecommendedBooks;
     }
 
 }

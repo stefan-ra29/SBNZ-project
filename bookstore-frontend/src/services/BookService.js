@@ -15,6 +15,17 @@ export function getAllBooks(setBooks) {
     });
 }
 
+export function getUnauthorizedUsersRecommendedBooks(setBooks) {
+  getAxios()
+    .get(apiURL + "/recommendations/unauthorized")
+    .then((response) => {
+      setBooks(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 export function placeOrder(books) {
   console.log(books);
   const token = localStorage.getItem("token");

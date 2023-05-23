@@ -4,6 +4,15 @@ insert into books (id, author, category, name, price, added_to_store_date, publi
 insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2003, 'Marcus Aurelius', 3, 'Meditations', 950, '2018-05-15', '2018-07-11');
 insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2004, 'Stefan Tosic', 1, 'Book', 3500, '2023-03-22', '2023-02-27');
 insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2006, 'Vojin', 3, 'Knjiga', 4000, '2023-05-14', '2023-05-10');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2040, 'J.R.R. Tolkien', 1, 'The Lord of the Rings', 3200, '2023-04-30', '2023-03-28');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2041, 'Khaled Hosseini', 3, 'The Kite Runner', 1500, '2023-03-05', '2023-02-10');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2042, 'J.K. Rowling', 3, 'Harry Potter and the Philosophers Stone', 4500, '2023-05-14', '2023-05-05');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2043, 'Kurt Vonnegut', 3, 'Slaughterhouse-Five', 4200, '2023-03-18', '2023-03-15');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2044, 'Harper Lee', 3, 'To Kill a Mockingbird', 2990, '2023-04-14', '2023-04-02');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2045, 'Harper Lee', 3, 'To Kill a Mockingbird 2', 2890, '2023-05-14', '2023-05-02');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2046, 'Markus Zusak', 3, 'The Book Thief', 1799, '2023-05-14', '2023-05-02');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2047, 'Paulo Coelho', 0, 'The Alchemist', 1200, '2023-05-15', '2002-03-12');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2051, 'Stephanie Myers', 0, 'The Twilight Saga', 5200, '2023-05-15', '2002-03-12');
 
 insert into users (id, username, password, name) values (2005, 'vojin', '$2a$12$qpW8fwoq457m0A3KRe0S..W3lpn1mjJ/N2ULgKixsy/WNN0/G7bdy', 'vojin');
 insert into users (id, username, password, name) values (2007, 'stefan', '$2a$12$qpW8fwoq457m0A3KRe0S..W3lpn1mjJ/N2ULgKixsy/WNN0/G7bdy', 'stefan');
@@ -22,18 +31,23 @@ insert into users (id, username, password, name) values (2019, 'sanja', '$2a$12$
 insert into users (id, username, password, name) values (2020, 'sandra', '$2a$12$qpW8fwoq457m0A3KRe0S..W3lpn1mjJ/N2ULgKixsy/WNN0/G7bdy', 'sandra');
 
 -- za Animal farm ocjene
-insert into rates (id, rate, book_id, user_id) values (2007, 4, 2000, 2005);
+insert into rates (id, rate, book_id, user_id) values (2039, 1, 2000, 2005);
 insert into rates (id, rate, book_id, user_id) values (2021, 3, 2000, 2007);
-insert into rates (id, rate, book_id, user_id) values (2022, 4, 2000, 2008);
-insert into rates (id, rate, book_id, user_id) values (2023, 4, 2000, 2009);
-insert into rates (id, rate, book_id, user_id) values (2024, 5, 2000, 2010);
+insert into rates (id, rate, book_id, user_id) values (2022, 1, 2000, 2008);
+insert into rates (id, rate, book_id, user_id) values (2023, 2, 2000, 2009);
+insert into rates (id, rate, book_id, user_id) values (2024, 1, 2000, 2010);
 insert into rates (id, rate, book_id, user_id) values (2025, 3, 2000, 2011);
-insert into rates (id, rate, book_id, user_id) values (2026, 5, 2000, 2012);
-insert into rates (id, rate, book_id, user_id) values (2027, 4, 2000, 2013);
-insert into rates (id, rate, book_id, user_id) values (2028, 5, 2000, 2014);
+insert into rates (id, rate, book_id, user_id) values (2026, 1, 2000, 2012);
+insert into rates (id, rate, book_id, user_id) values (2027, 2, 2000, 2013);
+insert into rates (id, rate, book_id, user_id) values (2028, 1, 2000, 2014);
 insert into rates (id, rate, book_id, user_id) values (2029, 2, 2000, 2015);
 insert into rates (id, rate, book_id, user_id) values (2030, 3, 2000, 2016);
-insert into rates (id, rate, book_id, user_id) values (2031, 5, 2000, 2017);
+insert into rates (id, rate, book_id, user_id) values (2031, 2, 2000, 2017);
+
+-- za The Alchemist ocjene
+insert into rates (id, rate, book_id, user_id) values (2048, 1, 2047, 2005);
+insert into rates (id, rate, book_id, user_id) values (2049, 2, 2047, 2007);
+insert into rates (id, rate, book_id, user_id) values (2050, 1, 2047, 2008);
 
 -- za Meditations ocjene
 insert into rates (id, rate, book_id, user_id) values (2032, 5, 2003, 2017);
