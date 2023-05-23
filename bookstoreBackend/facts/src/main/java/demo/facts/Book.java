@@ -49,12 +49,30 @@ public class Book implements Serializable {
         return sum / rates.size();
     }
 
+    public String getRatingLevel() {
+        if (getBookRatingLevel() == BookRatingLevel.NEUTRAL)
+            return "NEUTRAL";
+        else if (getBookRatingLevel() == BookRatingLevel.GOOD)
+            return "GOOD";
+        else
+            return "BAD";
+
+    }
+
     public boolean isNew() {
         return isNew;
     }
 
     public void setNew(boolean isNew) {
         this.isNew = isNew;
+    }
+
+    public boolean isPopular() {
+        return isPopular;
+    }
+
+    public void setPopular(boolean isPopular) {
+        this.isPopular = isPopular;
     }
 
 }

@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import BrowseBooks from "./pages/BrowseBooks";
+import UnauthorizedUsersRecommendedBooks from "./pages/UnauthorizedUsersRecommendedBooks";
 import Header from "./components/layout/Header";
 import Registration from "./pages/Registration";
 import CartProvider from "./store/CartProvider";
@@ -33,6 +34,7 @@ function App() {
         <main>
           <Routes>
             <Route index element={<Home />} />
+            <Route path="unauthorizedUsersRecommendedBooks" element={<UnauthorizedUsersRecommendedBooks />} />
             <Route path="browse" element={<BrowseBooks />} />
             <Route path="register" element={<Registration />} />
             <Route path="login" element={<Login />} />

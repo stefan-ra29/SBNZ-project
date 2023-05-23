@@ -11,6 +11,7 @@ export default function Header(props) {
         <h1>SBNZ Bookstore</h1>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/browse">Browse books</NavLink>
+        {!isUserLoggedIn() && <NavLink to="/unauthorizedUsersRecommendedBooks">Recommended books</NavLink>}
         {!isUserLoggedIn() && <NavLink to="/register">Create account</NavLink>}
         {!isUserLoggedIn() && <NavLink to="/login">Login</NavLink>}
         {isUserLoggedIn() && (

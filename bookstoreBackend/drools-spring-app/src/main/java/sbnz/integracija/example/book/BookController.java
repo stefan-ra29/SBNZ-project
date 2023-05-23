@@ -42,11 +42,11 @@ public class BookController {
 
     @GetMapping
     @RequestMapping("/recommendations/unauthorized")
-    public List<BookDisplayDTO> getRecommendationsForUnauthorizedUsers() {
+    public List<Book> getRecommendationsForUnauthorizedUsers() {
 
         List<Book> recommendations = service.getRecommendationsForUnauthorizedUsers();
 
-        return null;
+        return recommendations;
     }
 
 
