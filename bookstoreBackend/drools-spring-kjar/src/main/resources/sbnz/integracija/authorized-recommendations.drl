@@ -1,0 +1,25 @@
+package sbnz.integracija;
+dialect  "mvel"
+
+import demo.facts.*
+
+rule "find 4 most populat writters in any of the users genres"
+    agenda-group "writtersSearh"
+    when
+        $author: String();
+        $mostPopularWritters: MostPopularWritters();
+        eval($mostPopularWritters.isWritterInGenre($author))
+    then
+        $mostPopularWritters.addWritter($author);
+end
+
+rule "find 10 highest rated books from 4 authors in users genres"
+    agenda-group "booksByAuthors"
+    when
+        $mostPopularWritters: MostPopularWritters();
+        $book : Book();
+        $authorizedUsersRecommendedBook : AuthorizedUsersRecommendedBook();
+        eval($mostPopularWritters.writters.containsKey($book.getAuthor()))
+    then
+        $authorizedUsersRecommendedBook.addBook($book);
+end

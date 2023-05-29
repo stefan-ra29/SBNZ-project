@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Entity(name = "users")
@@ -25,4 +24,8 @@ public class User implements Serializable {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<Rate> rates;
+
+    @ManyToMany()
+    @JoinTable(name="user_genres", joinColumns = @JoinColumn(name="users_id"), inverseJoinColumns = @JoinColumn(name="genres_id"))
+    private List<Genre> genres;
 }
