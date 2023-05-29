@@ -1,0 +1,16 @@
+package sbnz.integracija;
+dialect  "mvel"
+
+import demo.facts.*;
+
+
+rule "pierson-rule"
+    agenda-group "old-authorized-users"
+    when
+        $book: Book();
+        $piersonCorrelationHelper: PiersonCorrelationHelper();
+        $recommendedBooks: AuthorizedUsersRecommendedBook();
+        eval($piersonCorrelationHelper.isPiersonRuleSatisfied($book))
+    then
+        $recommendedBooks.addBook($book);
+end

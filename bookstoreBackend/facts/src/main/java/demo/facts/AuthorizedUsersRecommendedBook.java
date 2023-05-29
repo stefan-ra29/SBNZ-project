@@ -30,5 +30,4 @@ public class AuthorizedUsersRecommendedBook implements Serializable {
         this.recommendedBooks.remove(book);
     }
 
-
 }

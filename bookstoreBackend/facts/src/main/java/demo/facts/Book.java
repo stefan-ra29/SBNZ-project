@@ -41,7 +41,7 @@ public class Book implements Serializable {
 
     public double getAverageRating() {
         if (rates.size() == 0)
-            return 0;
+            return 1;
         double sum = 0;
         for (Rate rate: rates) {
             sum += rate.getRate();
