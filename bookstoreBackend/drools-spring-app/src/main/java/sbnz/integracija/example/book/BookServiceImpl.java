@@ -1,25 +1,23 @@
 package sbnz.integracija.example.book;
 
-import demo.facts.Book;
-import demo.facts.BookRatingLevel;
-import demo.facts.UnauthorizedUsersRecommendedBook;
+import demo.facts.*;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sbnz.integracija.example.book.dto.BookDisplayDTO;
+import sbnz.integracija.example.user.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService{
 
     private final BookRepository repository;
+    private final UserRepository userRepository;
     private KieContainer kieContainer;
 
-    public BookServiceImpl(BookRepository repository, KieContainer kieContainer) {
+    public BookServiceImpl(BookRepository repository, UserRepository userRepository, KieContainer kieContainer) {
         this.repository = repository;
+        this.userRepository = userRepository;
         this.kieContainer = kieContainer;
     }
 
@@ -68,5 +66,23 @@ public class BookServiceImpl implements BookService{
         List<Book> finalListOfRecommendedBooks = unauthorizedUsersRecommendedBook.getRecommendedBooks();
         return finalListOfRecommendedBooks;
     }
+
+    @Override
+    public List<Book> getRecommendationsForAuthorizedUsers(int userId) {
+        KieSession kieSession = kieContainer.newKieSession();
+        List<Book> allBooks = repository.findAll();
+        OldAuthorizedUsersRecommendedBooks books = new OldAuthorizedUsersRecommendedBooks();
+        PiersonCorrelationHelper piersonCorrelationHelper =
+                new PiersonCorrelationHelper(userRepository.findById(userId).orElseThrow(), allBooks);
+        kieSession.insert(books);
+        kieSession.insert(piersonCorrelationHelper);
+        for(Book book : allBooks) {
+            kieSession.insert(book);
+        }
+        kieSession.getAgenda().getAgendaGroup("old-authorized-users").setFocus();
+        kieSession.fireAllRules();
+        return null;
+    }
+
 
 }

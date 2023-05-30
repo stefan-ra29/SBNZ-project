@@ -9,4 +9,5 @@ public interface BookService {
     List<Book> getAll();
     Book getById(int id);
     List<Book> getRecommendationsForUnauthorizedUsers();
+    List<Book> getRecommendationsForAuthorizedUsers(int userId);
 }

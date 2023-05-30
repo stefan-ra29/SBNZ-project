@@ -24,8 +24,10 @@ public class User implements Serializable {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<Rate> rates;
-
     @ManyToMany()
     @JoinTable(name="user_genres", joinColumns = @JoinColumn(name="users_id"), inverseJoinColumns = @JoinColumn(name="genres_id"))
     private List<Genre> genres;
+    public double getAverageRate() {
+        return rates.stream().mapToInt(Rate::getRate).average().orElse(0);
+    }
 }
