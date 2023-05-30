@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Getter
@@ -14,6 +16,8 @@ import java.util.Map;
 public class OldAuthorizedUsersRecommendedBooks implements Serializable {
 
     private Map<Book, Long> recommendedBooks;
+
+    private List<Book> booksUserLikes;
 
     public OldAuthorizedUsersRecommendedBooks() {
         this.recommendedBooks = new HashMap<>();
