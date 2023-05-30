@@ -6,6 +6,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 import sbnz.integracija.example.user.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,18 +72,33 @@ public class BookServiceImpl implements BookService{
     public List<Book> getRecommendationsForAuthorizedUsers(int userId) {
         KieSession kieSession = kieContainer.newKieSession();
         List<Book> allBooks = repository.findAll();
+        User user = userRepository.findById(userId).orElseThrow();
         OldAuthorizedUsersRecommendedBooks books = new OldAuthorizedUsersRecommendedBooks();
         PiersonCorrelationHelper piersonCorrelationHelper =
-                new PiersonCorrelationHelper(userRepository.findById(userId).orElseThrow(), allBooks);
+                new PiersonCorrelationHelper(user, allBooks);
+        UserLikedBooksHelper userLikedBooksHelper =
+                new UserLikedBooksHelper(user, getBooksThatUserLikes(user));
         kieSession.insert(books);
         kieSession.insert(piersonCorrelationHelper);
+        kieSession.insert(userLikedBooksHelper);
         for(Book book : allBooks) {
             kieSession.insert(book);
         }
         kieSession.getAgenda().getAgendaGroup("old-authorized-users").setFocus();
         kieSession.fireAllRules();
+
         return null;
     }
 
+    @Override
+    public List<Book> getBooksThatUserLikes(User user){
+        List<Book> likedBooks = new ArrayList<>();
+        for(Rate rate : user.getRates()){
+            if(rate.getRate() >= 4){
+                likedBooks.add(rate.getBook());
+            }
+        }
+        return likedBooks;
+    }
 
 }

@@ -1,9 +1,14 @@
 package sbnz.integracija.example.user;
 
+import demo.facts.Book;
+import demo.facts.Rate;
 import demo.facts.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sbnz.integracija.example.exceptions.CustomBadRequestException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,5 +36,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         return repository.getUserByUsername(username);
     }
+
+
 
 }

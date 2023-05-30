@@ -2,6 +2,8 @@ package sbnz.integracija;
 dialect  "mvel"
 
 import demo.facts.*;
+import demo.facts.UnauthorizedUsersRecommendedBook;
+import demo.facts.BookRatingLevel;
 
 
 rule "pierson-rule"
@@ -13,4 +15,15 @@ rule "pierson-rule"
         eval($piersonCorrelationHelper.isPiersonRuleSatisfied($book))
     then
         $recommendedBooks.addBook($book);
+end
+
+rule "70-percent-match-rule"
+    agenda-group "old-authorized-users"
+    when
+        $book: Book();
+        $userLikedBooksHelper: UserLikedBooksHelper();
+        $oldAuthorizedUsersRecommendedBooks: OldAuthorizedUsersRecommendedBooks();
+        eval($userLikedBooksHelper.isItTheDifferentBook($book) && $userLikedBooksHelper.areBooksSimilar($book))
+    then
+        $oldAuthorizedUsersRecommendedBooks.addBook($book);
 end
