@@ -1,10 +1,7 @@
 package demo.facts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +23,7 @@ public class User implements Serializable {
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Rate> rates;
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="user_genres", joinColumns = @JoinColumn(name="users_id"), inverseJoinColumns = @JoinColumn(name="genres_id"))
     private List<Genre> genres;
     public double getAverageRate() {

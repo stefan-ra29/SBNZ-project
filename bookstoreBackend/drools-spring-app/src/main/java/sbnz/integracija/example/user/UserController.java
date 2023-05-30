@@ -2,6 +2,7 @@ package sbnz.integracija.example.user;
 
 import demo.facts.User;
 import org.springframework.web.bind.annotation.*;
+import sbnz.integracija.example.user.dto.UserCreateDTO;
 
 
 @RestController
@@ -15,8 +16,8 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
-        service.create(user);
+    public void addUser(@RequestBody UserCreateDTO userCreateDTO) {
+        service.create(userCreateDTO);
     }
 
 }

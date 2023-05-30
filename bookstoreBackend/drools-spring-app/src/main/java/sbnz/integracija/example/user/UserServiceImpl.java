@@ -1,14 +1,15 @@
 package sbnz.integracija.example.user;
 
-import demo.facts.Book;
-import demo.facts.Rate;
-import demo.facts.User;
+import demo.facts.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sbnz.integracija.example.exceptions.CustomBadRequestException;
+import sbnz.integracija.example.user.dto.UserCreateDTO;
 
+import javax.persistence.EnumType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,11 +25,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User create(User user) {
-        if(repository.getUserByUsername(user.getUsername()) != null) {
+    public User create(UserCreateDTO userCreateDTO) {
+        if(repository.getUserByUsername(userCreateDTO.getUsername()) != null) {
             throw new CustomBadRequestException("Username already exists");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = User.builder()
+                .name(userCreateDTO.getName())
+                .username(userCreateDTO.getUsername())
+                .genres(userCreateDTO.getGenres().stream().map(i -> Genre.builder().id(i).build()).collect(Collectors.toList()))
+                .build();
+        user.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         return repository.save(user);
     }
 
