@@ -74,8 +74,66 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<Book> getRecommendationsForAuthorizedUsers(int userId) {
         KieSession kieSession = kieContainer.newKieSession();
-        List<Book> allBooks = repository.findAll();
         User user = userRepository.findById(userId).orElseThrow();
+        List<Genre> genres = userRepository.getAllUserGenres(userId);
+        user.setGenres(genres);
+        System.out.println(user.getGenres());
+        kieSession.insert(user);
+        kieSession.getAgenda().getActivationGroup("user-rules");
+        kieSession.fireAllRules();
+        switch (user.getUserState()) {
+            case OLD_USER:
+                kieSession.dispose();
+                kieSession.destroy();
+                return oldUser(userId);
+            case NEW_USER:
+                kieSession.dispose();
+                kieSession.destroy();
+                return newUserWithGenres(userId);
+            default:
+                kieSession.dispose();
+                kieSession.destroy();
+                return getRecommendationsForUnauthorizedUsers();
+        }
+
+    }
+
+    private List<Book> newUserWithGenres(int userId) {
+        KieSession kieSession = kieContainer.newKieSession();
+        User user = userRepository.findById(userId).orElseThrow();
+        List<Genre> genres = userRepository.getAllUserGenres(userId);
+        user.setGenres(genres);
+        List<Book> allBooks = repository.findAll();
+
+        MostPopularWritters mostPopularWritters = new MostPopularWritters(allBooks, user.getGenres().stream()
+                .map(Genre::getGenre).collect(Collectors.toList()));
+        for(var book : allBooks) {
+            kieSession.insert(book);
+        }
+        List<String> authorsNames = repository.getAllAuthors();
+        List<Author> authors = authorsNames.stream().map(Author::new).collect(Collectors.toList());
+        for(var author : authors) {
+            kieSession.insert(author);
+        }
+        kieSession.insert(mostPopularWritters);
+        kieSession.getAgenda().getAgendaGroup("writtersSearh").setFocus();
+        kieSession.fireAllRules();
+
+        System.out.println(mostPopularWritters.getWritters());
+        AuthorizedUsersRecommendedBook authorizedUsersRecommendedBook = new AuthorizedUsersRecommendedBook();
+        kieSession.insert(authorizedUsersRecommendedBook);
+        kieSession.getAgenda().getAgendaGroup("booksByAuthors").setFocus();
+        kieSession.fireAllRules();
+        kieSession.dispose();
+        kieSession.destroy();
+        return authorizedUsersRecommendedBook.getRecommendedBooks();
+    }
+
+    private List<Book> oldUser(int userId) {
+        KieSession kieSession = kieContainer.newKieSession();
+        User user = userRepository.findById(userId).orElseThrow();
+
+        List<Book> allBooks = repository.findAll();
         OldAuthorizedUsersRecommendedBooks books = new OldAuthorizedUsersRecommendedBooks();
         PiersonCorrelationHelper piersonCorrelationHelper =
                 new PiersonCorrelationHelper(user, allBooks);
@@ -84,7 +142,7 @@ public class BookServiceImpl implements BookService{
         kieSession.insert(books);
         kieSession.insert(piersonCorrelationHelper);
         kieSession.insert(userLikedBooksHelper);
-                new PiersonCorrelationHelper(userRepository.findById(userId).orElseThrow(), allBooks);
+        new PiersonCorrelationHelper(userRepository.findById(userId).orElseThrow(), allBooks);
         UserPreferencesHelper userPreferencesHelper = new UserPreferencesHelper(ordersManager.getUsersOrderedBooksInLast6Months(userId));
         for(Book book : allBooks) {
             kieSession.insert(book);
@@ -96,6 +154,7 @@ public class BookServiceImpl implements BookService{
         kieSession.fireAllRules();
 
         kieSession.dispose();
+        kieSession.destroy();
         books.getRecommendedBooks().keySet().forEach(b -> System.out.println(b.getName() + ": " + books.getRecommendedBooks().get(b)));
         return new ArrayList<>(books.getRecommendedBooks().keySet());
     }

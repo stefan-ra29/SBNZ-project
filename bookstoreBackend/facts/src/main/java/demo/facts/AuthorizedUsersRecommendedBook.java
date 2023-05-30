@@ -1,13 +1,21 @@
 package demo.facts;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class AuthorizedUsersRecommendedBook implements Serializable {
 
     private List<Book> recommendedBooks;
 
-    public AuthorizedUsersRecommendedBook(List<BookCategory> userGenres) {
+    public AuthorizedUsersRecommendedBook() {
         this.recommendedBooks = new ArrayList<>();
     }
 

@@ -1,0 +1,26 @@
+package sbnz.integracija;
+
+import demo.facts.User;
+import demo.facts.UserState;
+import demo.facts.Genre
+
+rule "is user old"
+    activation-group "user-state"
+    salience -1
+    when
+        $user: User();
+        eval($user.getRates().size() > 9)
+    then
+        $user.setUserState(UserState.OLD_USER);
+end
+
+rule "is user new with genres"
+    activation-group "user-state"
+    salience 0
+    when
+        $user: User();
+        eval($user.getGenres().size() > 0)
+    then
+        $user.setUserState(UserState.NEW_USER);
+end
+

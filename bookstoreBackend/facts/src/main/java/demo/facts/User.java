@@ -31,4 +31,8 @@ public class User implements Serializable {
     public double getAverageRate() {
         return rates.stream().mapToInt(Rate::getRate).average().orElse(0);
     }
+
+    @Transient
+    @JsonIgnore
+    private UserState userState;
 }

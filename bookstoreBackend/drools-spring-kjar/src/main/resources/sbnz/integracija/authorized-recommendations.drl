@@ -1,24 +1,23 @@
 package sbnz.integracija;
-dialect  "mvel"
 
 import demo.facts.*
 
 rule "find 4 most populat writters in any of the users genres"
     agenda-group "writtersSearh"
     when
-        $author: String();
-        $mostPopularWritters: MostPopularWritters();
-        eval($mostPopularWritters.isWritterInGenre($author))
+        $author: Author()
+        $mostPopularWritters: MostPopularWritters()
+        eval($mostPopularWritters.isWritterInGenre($author.getName()) == true)
     then
-        $mostPopularWritters.addWritter($author);
+        $mostPopularWritters.addWritter($author.getName());
 end
 
 rule "find 10 highest rated books from 4 authors in users genres"
     agenda-group "booksByAuthors"
     when
-        $book : Book();
-        $mostPopularWritters: MostPopularWritters();
-        $authorizedUsersRecommendedBook : AuthorizedUsersRecommendedBook();
+        $book : Book()
+        $mostPopularWritters: MostPopularWritters()
+        $authorizedUsersRecommendedBook : AuthorizedUsersRecommendedBook()
         eval($mostPopularWritters.containsKey($book.getAuthor()) == true)
     then
         $authorizedUsersRecommendedBook.addBook($book);

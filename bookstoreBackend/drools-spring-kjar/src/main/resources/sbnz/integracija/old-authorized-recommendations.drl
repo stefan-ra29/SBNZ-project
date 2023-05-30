@@ -28,7 +28,7 @@ rule "preferences-rule"
 end
 
 rule "70-percent-match-rule"
-    agenda-group "old-authorized-users"
+    agenda-group "oldAuthorizedUsers"
     when
         $book: Book();
         $userLikedBooksHelper: UserLikedBooksHelper();
