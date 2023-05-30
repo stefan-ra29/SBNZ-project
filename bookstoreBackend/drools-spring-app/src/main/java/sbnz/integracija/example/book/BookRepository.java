@@ -13,6 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Book getById(int id);
     @Query("select distinct author from books")
     List<String> getAllAuthors();
-
-
+    List<Book> getAllByIdIn(List<Integer> ids);
 }

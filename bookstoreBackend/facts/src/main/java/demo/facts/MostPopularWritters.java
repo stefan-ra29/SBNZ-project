@@ -1,13 +1,19 @@
 package demo.facts;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Getter
+@Setter
 public class MostPopularWritters implements Serializable {
 
-    private Map<String, Long> writters;
+    private Map<String, Long> writters = new HashMap<>();
     private List<Book> books;
     private List<BookCategory> genres;
 
@@ -45,5 +51,9 @@ public class MostPopularWritters implements Serializable {
     public long getWrittersNumberOfGrades(String author){
         return books.stream().filter(book -> book.getAuthor().equals(author)).flatMapToInt(b -> IntStream.of(b.getRates().size())).count();
 
+    }
+
+    public boolean containsKey(String writer) {
+        return writters.containsKey(writer);
     }
 }

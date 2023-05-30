@@ -8,17 +8,20 @@ import sbnz.integracija.example.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService{
 
     private final BookRepository repository;
     private final UserRepository userRepository;
+    private final OrdersManager ordersManager;
     private KieContainer kieContainer;
 
-    public BookServiceImpl(BookRepository repository, UserRepository userRepository, KieContainer kieContainer) {
+    public BookServiceImpl(BookRepository repository, UserRepository userRepository, OrdersManager ordersManager, KieContainer kieContainer) {
         this.repository = repository;
         this.userRepository = userRepository;
+        this.ordersManager = ordersManager;
         this.kieContainer = kieContainer;
     }
 
@@ -81,13 +84,20 @@ public class BookServiceImpl implements BookService{
         kieSession.insert(books);
         kieSession.insert(piersonCorrelationHelper);
         kieSession.insert(userLikedBooksHelper);
+                new PiersonCorrelationHelper(userRepository.findById(userId).orElseThrow(), allBooks);
+        UserPreferencesHelper userPreferencesHelper = new UserPreferencesHelper(ordersManager.getUsersOrderedBooksInLast6Months(userId));
         for(Book book : allBooks) {
             kieSession.insert(book);
+            kieSession.insert(books);
+            kieSession.insert(piersonCorrelationHelper);
+            kieSession.insert(userPreferencesHelper);
         }
-        kieSession.getAgenda().getAgendaGroup("old-authorized-users").setFocus();
+        kieSession.getAgenda().getAgendaGroup("oldAuthorizedUsers").setFocus();
         kieSession.fireAllRules();
 
-        return null;
+        kieSession.dispose();
+        books.getRecommendedBooks().keySet().forEach(b -> System.out.println(b.getName() + ": " + books.getRecommendedBooks().get(b)));
+        return new ArrayList<>(books.getRecommendedBooks().keySet());
     }
 
     @Override

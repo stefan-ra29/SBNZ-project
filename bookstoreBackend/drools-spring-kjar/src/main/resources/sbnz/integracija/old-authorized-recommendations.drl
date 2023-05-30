@@ -1,5 +1,4 @@
 package sbnz.integracija;
-dialect  "mvel"
 
 import demo.facts.*;
 import demo.facts.UnauthorizedUsersRecommendedBook;
@@ -7,12 +6,23 @@ import demo.facts.BookRatingLevel;
 
 
 rule "pierson-rule"
-    agenda-group "old-authorized-users"
+    agenda-group "oldAuthorizedUsers"
     when
-        $book: Book();
-        $piersonCorrelationHelper: PiersonCorrelationHelper();
-        $recommendedBooks: AuthorizedUsersRecommendedBook();
-        eval($piersonCorrelationHelper.isPiersonRuleSatisfied($book))
+        $book: Book()
+        $piersonCorrelationHelper: PiersonCorrelationHelper()
+        $recommendedBooks: OldAuthorizedUsersRecommendedBooks()
+        eval($piersonCorrelationHelper.isPiersonRuleSatisfied($book) == true)
+    then
+        $recommendedBooks.addBook($book);
+end
+
+rule "preferences-rule"
+    agenda-group "oldAuthorizedUsers"
+    when
+        $book: Book()
+        $userPreferencesHelper: UserPreferencesHelper()
+        $recommendedBooks: OldAuthorizedUsersRecommendedBooks()
+        eval($userPreferencesHelper.isUserInterestedInAuthor($book.getAuthor()) == true || $userPreferencesHelper.isUserInterestedInBookCategory($book.getCategory()) == true)
     then
         $recommendedBooks.addBook($book);
 end
