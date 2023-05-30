@@ -23,7 +23,7 @@ public class User implements Serializable {
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Rate> rates;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name="user_genres", joinColumns = @JoinColumn(name="users_id"), inverseJoinColumns = @JoinColumn(name="genres_id"))
     private List<Genre> genres;
     public double getAverageRate() {
