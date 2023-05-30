@@ -20,6 +20,14 @@ end
 //        $book : Book();
 //        $authorizedUsersRecommendedBook : AuthorizedUsersRecommendedBook();
 //        eval($mostPopularWritters.writters.containsKey($book.getAuthor()))
+//
+//rule "find 10 highest rated books from 4 authors in users genres"
+//    agenda-group "booksByAuthors"
+//    when
+//        $book : Book();
+//        $mostPopularWritters: MostPopularWritters();
+//        $authorizedUsersRecommendedBook : AuthorizedUsersRecommendedBook();
+//        eval($mostPopularWritters.containsKey($book.getAuthor()))
 //    then
 //        $authorizedUsersRecommendedBook.addBook($book);
 //end

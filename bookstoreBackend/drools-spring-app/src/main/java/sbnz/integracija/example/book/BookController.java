@@ -49,5 +49,9 @@ public class BookController {
         return recommendations;
     }
 
-
+    @GetMapping
+    @RequestMapping("/recommendations/authorized/{userId}")
+    public List<Book> getRecommendationsForAuthorizedUser(@PathVariable int userId) {
+        return service.getRecommendationsForAuthorizedUsers(userId);
+    }
 }

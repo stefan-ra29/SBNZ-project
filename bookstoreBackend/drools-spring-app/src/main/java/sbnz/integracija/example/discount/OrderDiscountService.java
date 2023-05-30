@@ -13,6 +13,7 @@ import sbnz.integracija.example.book.dto.OrderItemDTO;
 import sbnz.integracija.example.book.dto.OrderWithUserIdDTO;
 import sbnz.integracija.example.user.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class OrderDiscountService {
 
         order.setDiscountedPrice(price);
         order.setUserId(userId);
+        order.setCreationTime(LocalDateTime.now());
         create(order);
 
         return price;

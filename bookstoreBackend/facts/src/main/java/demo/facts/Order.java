@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.awt.print.Book;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +24,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int userId;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> items;
     private double orderPrice = 0;
     private double discountedPrice = 0;
-
+    private LocalDateTime creationTime;
 }

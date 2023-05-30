@@ -31,8 +31,8 @@ insert into users (id, username, password, name) values (2019, 'sanja', '$2a$12$
 insert into users (id, username, password, name) values (2020, 'sandra', '$2a$12$qpW8fwoq457m0A3KRe0S..W3lpn1mjJ/N2ULgKixsy/WNN0/G7bdy', 'sandra');
 
 -- za Animal farm ocjene
-insert into rates (id, rate, book_id, user_id) values (2039, 1, 2000, 2005);
-insert into rates (id, rate, book_id, user_id) values (2021, 3, 2000, 2007);
+insert into rates (id, rate, book_id, user_id) values (2039, 5, 2000, 2005);
+insert into rates (id, rate, book_id, user_id) values (2021, 5, 2000, 2007);
 insert into rates (id, rate, book_id, user_id) values (2022, 1, 2000, 2008);
 insert into rates (id, rate, book_id, user_id) values (2023, 2, 2000, 2009);
 insert into rates (id, rate, book_id, user_id) values (2024, 1, 2000, 2010);
@@ -57,3 +57,26 @@ insert into rates (id, rate, book_id, user_id) values (2035, 5, 2003, 2014);
 insert into rates (id, rate, book_id, user_id) values (2036, 4, 2003, 2013);
 insert into rates (id, rate, book_id, user_id) values (2037, 5, 2003, 2012);
 insert into rates (id, rate, book_id, user_id) values (2038, 4, 2003, 2011);
+insert into rates (id, rate, book_id, user_id) values (2134, 2, 2003, 2005);
+insert into rates (id, rate, book_id, user_id) values (2135, 2, 2003, 2007);
+
+--genres
+insert into genres (id, genre) values(1, 0);
+insert into genres (id, genre) values(2, 1);
+insert into genres (id, genre) values(3, 2);
+insert into genres (id, genre) values(4, 3);
+insert into genres (id, genre) values(5, 4);
+
+--user genres
+insert into user_genres(users_id, genres_id) values(2005, 1);
+insert into user_genres(users_id, genres_id) values(2005, 2);
+
+
+-- orders
+INSERT INTO public.orders (id, creation_time, discounted_price, order_price, user_id) VALUES (3000, '2023-05-30 11:36:04.924100', 8739, 8999, 2005);
+
+INSERT INTO public.order_items (id, amount, book_id, category, discount, discount_price, price, order_id) VALUES (3000, 1, 2000, 'Fiction', 0, 0, 1200, 3000);
+INSERT INTO public.order_items (id, amount, book_id, category, discount, discount_price, price, order_id) VALUES (3001, 1, 2001, 'Fiction', 0, 0, 800, 3000);
+INSERT INTO public.order_items (id, amount, book_id, category, discount, discount_price, price, order_id) VALUES (3002, 1, 2051, 'Fiction', 5, 4940, 5200, 3000);
+INSERT INTO public.order_items (id, amount, book_id, category, discount, discount_price, price, order_id) VALUES (3003, 1, 2046, 'Philosophy', 0, 0, 1799, 3000);
+
