@@ -1,10 +1,7 @@
 package demo.facts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,5 +32,5 @@ public class User implements Serializable {
 
     @Transient
     @JsonIgnore
-    private UserState userState;
+    private UserState userState = UserState.NEW_USER_NO_GENRES;
 }

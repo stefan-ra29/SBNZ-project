@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import BrowseBooks from "./pages/BrowseBooks";
 import UnauthorizedUsersRecommendedBooks from "./pages/UnauthorizedUsersRecommendedBooks";
+import AuthorizedUsersRecommendedBooks from "./pages/AuthorizedUsersRecommonededBooks";
 import Header from "./components/layout/Header";
 import Registration from "./pages/Registration";
 import CartProvider from "./store/CartProvider";
@@ -35,6 +36,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="unauthorizedUsersRecommendedBooks" element={<UnauthorizedUsersRecommendedBooks />} />
+            <Route path="authorizedUsersRecommendedBooks" element={<AuthorizedUsersRecommendedBooks />} />
             <Route path="browse" element={<BrowseBooks />} />
             <Route path="register" element={<Registration />} />
             <Route path="login" element={<Login />} />

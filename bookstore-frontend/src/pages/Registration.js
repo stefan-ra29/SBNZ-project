@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createUser } from "../services/UserService";
 import "./styles/Registration.css";
+import { BookCategory } from "./BookCategory";
+import { MDBSelect } from "mdb-react-ui-kit";
 
 import {
   MDBBtn,
@@ -21,11 +23,12 @@ export default function Registration() {
     }
   }, []);
 
-  const [user, setUser] = useState({ name: "", username: "", password: "" });
+  const [user, setUser] = useState({ name: "", username: "", password: "", genres: [] });
 
   const handleSubmit = () => {
     try {
       console.log(user);
+      console.log(user.genres);
       createUser(user);
       window.confirm("User is successfully registered");
       window.location.reload(false);
@@ -97,6 +100,37 @@ export default function Registration() {
                   />
                 </MDBCol>
               </MDBRow>
+
+              <select
+                  className="form__input"
+                  onChange={(e) => {
+                    const selectedOptions = Array.from(e.target.selectedOptions, (option) => Number(option.value));
+                    setUser((prevState) => ({
+                      ...prevState,
+                      genres: selectedOptions,
+                    }));
+                  }}
+                  id="genres"
+                  placeholder="Genres"
+                  multiple
+                >
+                    <option value={1}>
+                    FICTION
+                    </option>
+                    <option  value={2}>
+                    EDUCATION
+                    </option>
+                    <option value={3}>
+                    HISTORY
+                    </option>
+                    <option  value={4}>
+                    PHILOSOPHY
+                    </option>
+                    <option  value={5}>
+                    CHILDREN
+                    </option>
+
+                </select>
 
               <MDBBtn
                 onClick={() => handleSubmit()}

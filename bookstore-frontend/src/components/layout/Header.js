@@ -14,6 +14,7 @@ export default function Header(props) {
         {!isUserLoggedIn() && <NavLink to="/unauthorizedUsersRecommendedBooks">Recommended books</NavLink>}
         {!isUserLoggedIn() && <NavLink to="/register">Create account</NavLink>}
         {!isUserLoggedIn() && <NavLink to="/login">Login</NavLink>}
+        {isUserLoggedIn() && <NavLink to="/authorizedUsersRecommendedBooks">Recommended authorized books</NavLink>}
         {isUserLoggedIn() && (
           <NavLink
             onClick={() => {
@@ -26,6 +27,7 @@ export default function Header(props) {
         )}
         {isUserLoggedIn() && (
           <HeaderCartButton onClick={props.onShowCart}></HeaderCartButton>
+          
         )}
       </nav>
     </header>

@@ -26,6 +26,19 @@ export function getUnauthorizedUsersRecommendedBooks(setBooks) {
     });
 }
 
+export function getAuthorizedUsersRecommendedBooks(setBooks) {
+  const token = localStorage.getItem("token");
+  var decode = jwt_decode(token)
+  getAxios()
+    .get(apiURL + "/recommendations/authorized/"+ decode.id)
+    .then((response) => {
+      setBooks(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 export function placeOrder(books) {
   console.log(books);
   const token = localStorage.getItem("token");
