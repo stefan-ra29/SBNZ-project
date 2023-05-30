@@ -1,9 +1,6 @@
 package sbnz.integracija.example.book;
 
-import demo.facts.AuthorizedUsersRecommendedBook;
-import demo.facts.Book;
-import demo.facts.PiersonCorrelationHelper;
-import demo.facts.UnauthorizedUsersRecommendedBook;
+import demo.facts.*;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
@@ -74,7 +71,7 @@ public class BookServiceImpl implements BookService{
     public List<Book> getRecommendationsForAuthorizedUsers(int userId) {
         KieSession kieSession = kieContainer.newKieSession();
         List<Book> allBooks = repository.findAll();
-        AuthorizedUsersRecommendedBook books = new AuthorizedUsersRecommendedBook();
+        OldAuthorizedUsersRecommendedBooks books = new OldAuthorizedUsersRecommendedBooks();
         PiersonCorrelationHelper piersonCorrelationHelper =
                 new PiersonCorrelationHelper(userRepository.findById(userId).orElseThrow(), allBooks);
         kieSession.insert(books);
