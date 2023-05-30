@@ -7,11 +7,12 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Author {
+public class Author implements Serializable {
     String name;
 }

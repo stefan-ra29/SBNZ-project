@@ -116,13 +116,13 @@ public class BookServiceImpl implements BookService{
             kieSession.insert(author);
         }
         kieSession.insert(mostPopularWritters);
-        kieSession.getAgenda().getAgendaGroup("writtersSearh");
+        kieSession.getAgenda().getAgendaGroup("writtersSearh").setFocus();
         kieSession.fireAllRules();
 
         System.out.println(mostPopularWritters.getWritters());
         AuthorizedUsersRecommendedBook authorizedUsersRecommendedBook = new AuthorizedUsersRecommendedBook();
         kieSession.insert(authorizedUsersRecommendedBook);
-        kieSession.getAgenda().getAgendaGroup("booksByAuthors");
+        kieSession.getAgenda().getAgendaGroup("booksByAuthors").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
         kieSession.destroy();
