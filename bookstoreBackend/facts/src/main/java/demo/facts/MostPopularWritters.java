@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@AllArgsConstructor
 @Getter
 @Setter
 public class MostPopularWritters implements Serializable {
@@ -23,7 +24,13 @@ public class MostPopularWritters implements Serializable {
         this.genres = new ArrayList<>();
     }
 
+    public MostPopularWritters(List<Book> books, List<BookCategory> genres) {
+        this.books = books;
+        this.genres = genres;
+    }
+
     public void addWritter(String writter){
+        System.out.println("addWriter");
         long numberOfGrades = getWrittersNumberOfGrades(writter);
         if(this.writters.size() < 4){
             this.writters.put(writter, numberOfGrades);
@@ -38,6 +45,7 @@ public class MostPopularWritters implements Serializable {
     }
 
     public boolean isWritterInGenre(String author){
+        System.out.println("isInGenre");
         List<Book> authorsBooks = books.stream().filter(book -> book.getAuthor().equals(author)).collect(Collectors.toList());
         for(BookCategory genre : genres){
             List<Book> authorsBooksInGenre =authorsBooks.stream().filter(book -> book.getCategory().equals(genre)).collect(Collectors.toList());
