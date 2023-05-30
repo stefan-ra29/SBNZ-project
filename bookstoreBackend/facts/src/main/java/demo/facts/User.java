@@ -32,5 +32,5 @@ public class User implements Serializable {
 
     @Transient
     @JsonIgnore
-    private UserState userState;
+    private UserState userState = UserState.NEW_USER_NO_GENRES;
 }
