@@ -1,4 +1,4 @@
-insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2000, 'George Orwell', 0, 'Animal farm', 1200, '2023-05-15', '2002-03-12');
+insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2000, 'George Orwell', 0, 'Animal farm', 1200, '2023-05-15', '2023-05-12');
 insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2001, 'George Orwell', 0, '1984', 800, '2023-05-10', '2012-04-13');
 insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2002, 'Jovan Ducic', 1, 'Blago cara Radovana', 1400, '2020-01-10', '2000-10-10');
 insert into books (id, author, category, name, price, added_to_store_date, published_date) values (2003, 'Marcus Aurelius', 3, 'Meditations', 950, '2018-05-15', '2018-07-11');
@@ -50,7 +50,7 @@ insert into rates (id, rate, book_id, user_id) values (2049, 2, 2047, 2007);
 insert into rates (id, rate, book_id, user_id) values (2050, 1, 2047, 2008);
 
 -- za Meditations ocjene
-insert into rates (id, rate, book_id, user_id) values (2032, 5, 2003, 2017);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2003, 2005);
 insert into rates (id, rate, book_id, user_id) values (2033, 5, 2003, 2016);
 insert into rates (id, rate, book_id, user_id) values (2034, 4, 2003, 2015);
 insert into rates (id, rate, book_id, user_id) values (2035, 5, 2003, 2014);
@@ -59,6 +59,19 @@ insert into rates (id, rate, book_id, user_id) values (2037, 5, 2003, 2012);
 insert into rates (id, rate, book_id, user_id) values (2038, 4, 2003, 2011);
 insert into rates (id, rate, book_id, user_id) values (2134, 2, 2003, 2005);
 insert into rates (id, rate, book_id, user_id) values (2135, 2, 2003, 2007);
+
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2040, 2005);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2041, 2005);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2042, 2005);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2043, 2005);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2044, 2005);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2045, 2005);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2046, 2005);
+
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2040, 2007);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2041, 2007);
+insert into rates (id, rate, book_id, user_id) values (2032, 5, 2042, 2007);
+
 
 --genres
 insert into genres (id, genre) values(1, 0);
@@ -70,6 +83,8 @@ insert into genres (id, genre) values(5, 4);
 --user genres
 insert into user_genres(users_id, genres_id) values(2005, 1);
 insert into user_genres(users_id, genres_id) values(2005, 2);
+insert into user_genres(users_id, genres_id) values(2007, 3);
+insert into user_genres(users_id, genres_id) values(2007, 1);
 
 
 -- orders
