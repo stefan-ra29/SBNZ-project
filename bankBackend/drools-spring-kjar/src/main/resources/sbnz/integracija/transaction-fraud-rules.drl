@@ -1,0 +1,34 @@
+package sbnz.integracija;
+
+import demo.facts.transactions.*;
+import java.time.LocalDateTime;
+
+
+rule "transaction is suspicious if the amount is over 1000 and between 1AM and 6AM"
+   agenda-group "fraudDetection"
+   when
+        $transaction: Transaction(dateTime.getHour() >= 1 && dateTime.getHour() <= 6 && amount >= 1000)
+   then
+        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because it is between 1AM and 5AM with the amount over 1000");
+        $transaction.setFraudulentWarning(true);
+end
+
+rule "transaction is suspicious if the amount is at least 4 times larger that the average outbound transation amount for the user"
+   agenda-group "fraudDetection"
+   when
+        $transaction: Transaction(sender.getAverageOutboundTransactionsAmount() != 0.0 && amount >= 4 * sender.getAverageOutboundTransactionsAmount())
+   then
+        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because the amount much higher than average");
+        $transaction.setFraudulentWarning(true);
+end
+
+rule "transaction is suspicious if it is the third in the last 10 minutes"
+   agenda-group "fraudDetection"
+   when
+        $transaction: Transaction(sender.getTwoPreviousOutboundTransactions().size() == 2 &&
+                                  dateTime.minusMinutes(10).isBefore(sender.getTwoPreviousOutboundTransactions().get(0).getDateTime()) &&
+                                  dateTime.minusMinutes(10).isBefore(sender.getTwoPreviousOutboundTransactions().get(1).getDateTime()) )
+   then
+        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because it is the third in the last 10 minutes");
+        $transaction.setFraudulentWarning(true);
+end
