@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 public class SendTransactionDTO {
     private long senderCardNumber;
     private int senderCvvNumber;
+    private int cardExpirationYear;
+    private int cardExpirationMonth;
     private long senderAccountNumber;
     private long receiverAccountNumber;
     private long amount;

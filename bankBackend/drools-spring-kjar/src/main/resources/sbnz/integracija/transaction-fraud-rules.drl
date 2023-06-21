@@ -18,7 +18,7 @@ rule "transaction is suspicious if the amount is at least 4 times larger that th
    when
         $transaction: Transaction(sender.getAverageOutboundTransactionsAmount() != 0.0 && amount >= 4 * sender.getAverageOutboundTransactionsAmount())
    then
-        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because the amount much higher than average");
+        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because the amount is much higher than average");
         $transaction.setFraudulentWarning(true);
 end
 
@@ -30,5 +30,26 @@ rule "transaction is suspicious if it is the third in the last 10 minutes"
                                   dateTime.minusMinutes(10).isBefore(sender.getTwoPreviousOutboundTransactions().get(1).getDateTime()) )
    then
         $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because it is the third in the last 10 minutes");
+        $transaction.setFraudulentWarning(true);
+end
+
+
+rule "transaction is suspicious if it is more than 200km away from all previous transactions"
+   agenda-group "fraudDetection"
+   when
+        $transaction: Transaction(sender.getOutboundTransactions() != null, sender.getOutboundTransactions().size() >= 1)
+        forall($temporary: Transaction(distanceInKilometresTo($transaction.getLocationLongitude(), $transaction.getLocationLatitude()) > 200) from $transaction.sender.getOutboundTransactions())
+   then
+        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because it is more than 200km away from all previous transactions");
+        $transaction.setFraudulentWarning(true);
+end
+
+rule "transaction is suspicious if it is within 30 minutes from the last one and further than 150km from it"
+   agenda-group "fraudDetection"
+   when
+        $transaction: Transaction(getDateTime().isBefore(sender.getLastTransaction().getDateTime().plusMinutes(30)) &&
+                                  distanceInKilometresTo(sender.getLastTransaction().getLocationLongitude(), sender.getLastTransaction().getLocationLatitude()) > 150)
+   then
+        $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because it is within 30 minutes from the last one and further than 150km from it");
         $transaction.setFraudulentWarning(true);
 end

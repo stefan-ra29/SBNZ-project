@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Entity(name = "users")
@@ -45,6 +46,13 @@ public class User implements Serializable {
                 .sorted(Comparator.comparing(Transaction::getDateTime).reversed())
                 .limit(2)
                 .collect(Collectors.toList());
+    }
+
+    public Transaction getLastTransaction() {
+        Optional<Transaction> lastTransaction = getOutboundTransactions().stream()
+                .max(Comparator.comparing(Transaction::getDateTime));
+
+        return lastTransaction.orElse(null);
     }
 
 }

@@ -10,7 +10,7 @@ insert into bank_accounts (id, card_expiration_year, card_expiration_month, card
 
 
 insert into transactions (id, amount, date_time, location_latitude, location_longitude, receiver_bank_account_id, sender_bank_account_id, fraudulent_warning, sender_id, fraudulent_warning_message) values (2013, 100, '2023-06-21 14:30:00', 44.869566, 17.665829, 2011, 2010, false, 2005, '');
-insert into transactions (id, amount, date_time, location_latitude, location_longitude, receiver_bank_account_id, sender_bank_account_id, fraudulent_warning, sender_id, fraudulent_warning_message) values (2014, 200, '2023-06-21 14:49:00', 44.869566, 17.665829, 2011, 2010, false, 2005, '');
+insert into transactions (id, amount, date_time, location_latitude, location_longitude, receiver_bank_account_id, sender_bank_account_id, fraudulent_warning, sender_id, fraudulent_warning_message) values (2014, 200, '2023-06-21 14:49:00', 45.27324478169853, 19.813312360012787, 2011, 2010, false, 2005, '');
 
 
 

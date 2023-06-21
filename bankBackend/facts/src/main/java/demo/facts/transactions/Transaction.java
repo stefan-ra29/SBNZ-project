@@ -32,4 +32,24 @@ public class Transaction {
     private User sender;
     private boolean fraudulentWarning;
     private String fraudulentWarningMessage;
+
+    public double distanceInKilometresTo(double longitude, double latitude) {
+        double earthRadius = 6371; // Radius of the Earth in kilometers
+
+        double lat1 = Math.toRadians(this.locationLatitude);
+        double lon1 = Math.toRadians(this.locationLongitude);
+        double lat2 = Math.toRadians(latitude);
+        double lon2 = Math.toRadians(longitude);
+
+        double dLat = lat2 - lat1;
+        double dLon = lon2 - lon1;
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        double distance = earthRadius * c;
+        return distance;
+    }
 }

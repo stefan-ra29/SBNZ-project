@@ -12,6 +12,7 @@ import sbnz.integracija.example.bankAccount.BankAccountRepository;
 import sbnz.integracija.example.transaction.dto.SendTransactionDTO;
 import sbnz.integracija.example.user.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class TransactionService {
                 .build();
 
 
-        String validityMessage = checkValidity(senderBankAccount, receiverBankAccount, sendTransactionDTO);
+        String validityMessage = checkValidity(senderBankAccount, sendTransactionDTO);
 
         System.out.println(transaction.getDateTime().getHour());
 
@@ -69,7 +70,7 @@ public class TransactionService {
         return validityMessage;
     }
 
-    public String checkValidity(BankAccount senderBankAccount, BankAccount receiverBankAccount, SendTransactionDTO sendTransactionDTO) {
+    public String checkValidity(BankAccount senderBankAccount, SendTransactionDTO sendTransactionDTO) {
 
         if(sendTransactionDTO.getSenderCardNumber() != senderBankAccount.getCardNumber())
             return "Invalid sender card number";
@@ -77,6 +78,11 @@ public class TransactionService {
             return "Invalid sender card cvv number";
         else if(senderBankAccount.getBalance() - sendTransactionDTO.getAmount() < 0)
             return "Insufficient account balance";
+        else if(senderBankAccount.getCardExpirationYear() != sendTransactionDTO.getCardExpirationYear() ||
+                senderBankAccount.getCardExpirationMonth() != sendTransactionDTO.getCardExpirationMonth())
+            return  "Invalid sender card expiration date";
+        else if(LocalDate.of(senderBankAccount.getCardExpirationYear(), senderBankAccount.getCardExpirationMonth(), 1).isBefore(LocalDate.now()))
+            return "The card has expired";
 
         return "Success";
     }
