@@ -21,6 +21,7 @@ export default function Header(props) {
             Log out
           </NavLink>
         )}
+        {isUserLoggedIn() && <NavLink to="/transaction">Transaction</NavLink>}
       </nav>
     </header>
   );

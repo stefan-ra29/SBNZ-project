@@ -47,7 +47,7 @@ end
 rule "transaction is suspicious if it is within 30 minutes from the last one and further than 150km from it"
    agenda-group "fraudDetection"
    when
-        $transaction: Transaction(getDateTime().isBefore(sender.getLastTransaction().getDateTime().plusMinutes(30)) &&
+        $transaction: Transaction(sender.getLastTransaction() != null, getDateTime().isBefore(sender.getLastTransaction().getDateTime().plusMinutes(30)) &&
                                   distanceInKilometresTo(sender.getLastTransaction().getLocationLongitude(), sender.getLastTransaction().getLocationLatitude()) > 150)
    then
         $transaction.setFraudulentWarningMessage("Transaction could be fraudulent because it is within 30 minutes from the last one and further than 150km from it");
