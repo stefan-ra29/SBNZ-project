@@ -6,22 +6,23 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Transaction from "./pages/Transaction";
 
 function App() {
-
   return (
     <BrowserRouter>
       <ToastContainer />
 
-        <Header/>
+      <Header />
 
-        <main>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="register" element={<Registration />} />
-            <Route path="login" element={<Login />} />
-          </Routes>
-        </main>
+      <main>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="register" element={<Registration />} />
+          <Route path="login" element={<Login />} />
+          <Route path="transaction" element={<Transaction />} />
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 }
