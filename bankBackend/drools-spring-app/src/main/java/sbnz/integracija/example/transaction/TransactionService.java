@@ -70,6 +70,36 @@ public class TransactionService {
         return validityMessage;
     }
 
+    public String sendTransactionWithoutCheck(SendTransactionDTO sendTransactionDTO) {
+        BankAccount senderBankAccount = bankAccountRepository.findBankAccountByAccountNumber(sendTransactionDTO.getSenderAccountNumber()).orElseThrow();
+        BankAccount receiverBankAccount = bankAccountRepository.findBankAccountByAccountNumber(sendTransactionDTO.getReceiverAccountNumber()).orElseThrow();
+        User sender = senderBankAccount.getUser();
+
+        Transaction transaction = Transaction.builder()
+                .amount(sendTransactionDTO.getAmount())
+                .locationLongitude(sendTransactionDTO.getLocationLongitude())
+                .locationLatitude(sendTransactionDTO.getLocationLatitude())
+                .dateTime(LocalDateTime.now())
+                .receiverAccount(receiverBankAccount)
+                .senderAccount(senderBankAccount)
+                .fraudulentWarning(false)
+                .fraudulentWarningMessage("")
+                .sender(sender)
+                .build();
+
+
+        String validityMessage = checkValidity(senderBankAccount, sendTransactionDTO);
+
+        if(validityMessage.equals("Success")) {
+            senderBankAccount.setBalance(senderBankAccount.getBalance() - sendTransactionDTO.getAmount());
+            receiverBankAccount.setBalance(receiverBankAccount.getBalance() + sendTransactionDTO.getAmount());
+
+            transactionRepository.save(transaction);
+        }
+
+        return validityMessage;
+    }
+
     public String checkValidity(BankAccount senderBankAccount, SendTransactionDTO sendTransactionDTO) {
 
         if(sendTransactionDTO.getSenderCardNumber() != senderBankAccount.getCardNumber())

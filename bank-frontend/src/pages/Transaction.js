@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./styles/Registration.css";
-import { transaction } from "../services/TransactionsService";
+import {
+  transaction,
+  transactionWithoutCheck,
+} from "../services/TransactionsService";
 
 const Transaction = () => {
   const [senderCardNumber, setSenderCardNumber] = useState();
@@ -34,8 +37,8 @@ const Transaction = () => {
     fetchGeolocation();
   }, []);
 
-  function handleTransaction() {
-    transaction({
+  async function handleTransaction() {
+    let res = await transaction({
       senderCardNumber: senderCardNumber,
       senderCvvNumber: senderCvvNumber,
       cardExpirationYear: cardExpirationYear,
@@ -46,6 +49,21 @@ const Transaction = () => {
       locationLatitude: locationLatitude,
       locationLongitude: locationLongitude,
     });
+    if (res != "Success") {
+      if (window.confirm(res + ". Do you want to proceed anyway?") == true) {
+        transactionWithoutCheck({
+          senderCardNumber: senderCardNumber,
+          senderCvvNumber: senderCvvNumber,
+          cardExpirationYear: cardExpirationYear,
+          cardExpirationMonth: cardExpirationMonth,
+          senderAccountNumber: senderAccountNumber,
+          receiverAccountNumber: receiverAccountNumber,
+          amount: amount,
+          locationLatitude: locationLatitude,
+          locationLongitude: locationLongitude,
+        });
+      }
+    }
   }
 
   return (
