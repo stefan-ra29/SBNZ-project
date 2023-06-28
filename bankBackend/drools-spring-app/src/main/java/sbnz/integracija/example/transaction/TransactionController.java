@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sbnz.integracija.example.transaction.dto.ResponseTransactionDTO;
 import sbnz.integracija.example.transaction.dto.SendTransactionDTO;
 
 @RestController
@@ -15,7 +16,13 @@ public class TransactionController {
     TransactionService transactionService;
 
     @PostMapping
-    private String sendTransaction(@RequestBody SendTransactionDTO sendTransactionDTO) {
-        return transactionService.sendTransaction(sendTransactionDTO);
+    private ResponseTransactionDTO sendTransaction(@RequestBody SendTransactionDTO sendTransactionDTO) {
+        return new ResponseTransactionDTO(transactionService.sendTransaction(sendTransactionDTO));
+    }
+
+    @PostMapping
+    @RequestMapping("/without-check")
+    private ResponseTransactionDTO sendTransactionWithoutCheck(@RequestBody SendTransactionDTO sendTransactionDTO) {
+        return new ResponseTransactionDTO(transactionService.sendTransactionWithoutCheck(sendTransactionDTO));
     }
 }
